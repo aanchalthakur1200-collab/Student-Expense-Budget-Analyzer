@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block breadcrumb %}Reports & analysis{% endblock %}
+{% block content %}
+<div class="page-heading heading-row"><div><p class="eyebrow">A LOOK BACK, A STEP FORWARD</p><h1>Your spending story.</h1><p class="subtitle">Patterns can help you make choices that feel right for you.</p></div><span class="report-period">{{ current_month }} · category view</span></div>
+<div class="report-stats">
+  <article class="stat-card"><span class="stat-label">ALL-TIME SPENDING</span><strong class="stat-value">{{ total_spent|currency }}</strong><span class="stat-note">Across {{ transaction_count }} transactions</span></article>
+  <article class="stat-card"><span class="stat-label">AVERAGE EXPENSE</span><strong class="stat-value">{{ average_expense|currency }}</strong><span class="stat-note">Per transaction</span></article>
+  <article class="stat-card"><span class="stat-label">TOP CATEGORY · THIS MONTH</span><strong class="stat-value">{{ highest_category }}</strong><span class="stat-note">Based on current month expenses</span></article>
+  <article class="stat-card"><span class="stat-label">TRANSACTIONS</span><strong class="stat-value">{{ transaction_count }}</strong><span class="stat-note">All recorded expenses</span></article>
+</div>
+<div class="reports-grid">
+  <section class="panel report-chart-panel"><div class="panel-heading"><div><h2>Monthly expense trends</h2><p>Spending across the last six months</p></div></div><div class="report-chart-wrap"><canvas id="reportMonthlyChart" aria-label="Monthly expense trends chart"></canvas><div class="chart-empty" {% if transaction_count %}hidden{% endif %}>Your trend will appear here when you record expenses.</div></div></section>
+  <section class="panel report-chart-panel"><div class="panel-heading"><div><h2>Category breakdown</h2><p>{{ current_month }}</p></div></div><div class="report-category-wrap"><canvas id="reportCategoryChart" aria-label="Category breakdown chart"></canvas><div class="chart-empty" {% if category_labels %}hidden{% endif %}>No category data for this month yet.</div></div></section>
+</div>
+<script id="report-data" type="application/json">{{ {"months": month_labels, "monthly": monthly_totals, "categories": category_labels, "categoryValues": category_values}|tojson }}</script>
+{% if transaction_count == 0 %}<div class="empty-note">Reports will become more useful as you add expenses. No sample transactions have been added.</div>{% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+PROJECT TITLE: Student Expense Analyzer
+
+OBJECTIVE:
+Build a beginner-friendly web dashboard that helps students record daily expenses, monitor a monthly budget, and understand spending habits.
+
+TECHNOLOGIES:
+HTML, CSS, JavaScript, Python Flask, Pandas, NumPy, Chart.js, and CSV file handling.
+
+MODULES:
+1. Dashboard: monthly summaries, recent transactions, budget progress, and charts.
+2. Expense Management: add, edit, delete, search, filter, and export transactions.
+3. Budget Settings: set and save a monthly budget with spending alerts.
+4. Reports: review category spending, monthly trends, averages, and totals.
+5. Data Storage: keep expense records and settings locally in CSV and JSON files.
+
+HOW TO RUN:
+Double-click run_windows.bat, or install requirements.txt and run `python app.py`. Open http://127.0.0.1:5000 in a browser.
+
+DATA MIGRATION:
+Existing desktop-app CSV records are retained. The old `description` field becomes `title`; payment method defaults to Cash and notes are blank. No sample transactions are inserted.
+
+FUTURE SCOPE:
+Add authentication, recurring expenses, PDF reports, database support, and deployment configuration.

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit expense' if editing else 'Add expense' }}{% endblock %}
+{% block breadcrumb %}{{ 'Edit expense' if editing else 'Add expense' }}{% endblock %}
+{% block content %}
+<div class="page-heading"><p class="eyebrow">KEEP IT SIMPLE</p><h1>{{ 'Update an expense.' if editing else 'Add an expense.' }}</h1><p class="subtitle">A quick note now makes your monthly review easier later.</p></div>
+<div class="form-layout">
+  <section class="panel form-panel">
+    <div class="form-intro"><span class="form-icon">✦</span><div><h2>{{ 'Expense details' if editing else 'What did you spend on?' }}</h2><p>Fields marked <span class="required">*</span> are required.</p></div></div>
+    <form method="post" class="expense-form" novalidate>
+      <div class="field"><label for="title">Expense title <span class="required">*</span></label><input id="title" name="title" type="text" maxlength="100" placeholder="e.g. Lunch with friends" value="{{ expense.get('title', '') }}" required><small>Give it a name you'll recognize later.</small></div>
+      <div class="form-row">
+        <div class="field"><label for="amount">Amount <span class="required">*</span></label><div class="input-prefix"><span>₹</span><input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" value="{{ expense.get('amount', '') }}" required></div></div>
+        <div class="field"><label for="date">Date <span class="required">*</span></label><input id="date" name="date" type="date" value="{{ expense.get('date', '') or today }}" required></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label for="category">Category <span class="required">*</span></label><select id="category" name="category" required><option value="">Choose a category</option>{% for category in categories %}<option value="{{ category }}" {{ 'selected' if expense.get('category') == category else '' }}>{{ category }}</option>{% endfor %}</select></div>
+        <div class="field"><label for="payment_method">Payment method <span class="required">*</span></label><select id="payment_method" name="payment_method" required><option value="">Choose a method</option>{% for method in payment_methods %}<option value="{{ method }}" {{ 'selected' if expense.get('payment_method') == method else '' }}>{{ method }}</option>{% endfor %}</select></div>
+      </div>
+      <div class="field"><label for="notes">Notes <span class="optional">(optional)</span></label><textarea id="notes" name="notes" rows="3" maxlength="500" placeholder="Anything else you'd like to remember?">{{ expense.get('notes', '') }}</textarea></div>
+      <div class="form-actions"><a class="button button-quiet" href="{{ url_for('expenses_page') }}">Cancel</a><button class="button button-primary" type="submit">{{ 'Save changes' if editing else 'Save expense' }} <span>→</span></button></div>
+    </form>
+  </section>
+  <aside class="panel form-aside"><div class="aside-art">✦</div><p class="eyebrow">A LITTLE REMINDER</p><h2>Every expense tells a story.</h2><p>There are no good or bad expenses here. Just helpful information to make your money work for you.</p><div class="aside-decoration"><span>Mindful</span><i>·</i><span>Not perfect</span><i>·</i><span>Progress</span></div></aside>
+</div>
+{% endblock %}

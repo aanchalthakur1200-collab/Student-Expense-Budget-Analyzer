@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Budget{% endblock %}
+{% block breadcrumb %}Budget settings{% endblock %}
+{% block content %}
+<div class="page-heading"><p class="eyebrow">PLAN AT YOUR OWN PACE</p><h1>Your monthly budget.</h1><p class="subtitle">Set a comfortable limit and keep your spending in perspective.</p></div>
+<div class="budget-page-grid">
+  <section class="panel budget-settings-panel"><div class="panel-heading"><div><h2>Budget settings</h2><p>Your budget is saved on this device.</p></div><span class="settings-icon">⚙</span></div>
+    <form method="post" class="budget-form"><div class="field"><label for="monthly_budget">Monthly spending limit</label><div class="input-prefix large-prefix"><span>₹</span><input id="monthly_budget" name="monthly_budget" type="number" min="0" step="0.01" value="{{ '%.2f'|format(budget) }}" required></div><small>Choose an amount that feels realistic for your month.</small></div><button class="button button-primary" type="submit">Save budget <span>→</span></button></form>
+  </section>
+  <section class="panel budget-summary-panel"><p class="eyebrow">THIS MONTH</p><h2>{{ spent|currency }} <span>spent</span></h2><div class="progress-track big-progress"><div class="progress-fill {{ 'over' if used_percent >= 100 else '' }}" data-progress="{{ [used_percent, 100]|min }}"></div></div><div class="progress-meta"><span>{{ "%.0f"|format(used_percent) }}% of {{ budget|currency }}</span><span>{{ remaining|currency }} remaining</span></div>
+    {% if used_percent >= 100 %}<div class="budget-alert danger">You've exceeded this month's budget. Take a look at your recent expenses.</div>{% elif used_percent >= 80 %}<div class="budget-alert warning">You're getting close to your limit. There's still time to adjust.</div>{% else %}<div class="budget-encouragement">You're within your monthly budget. Keep it up!</div>{% endif %}
+  </section>
+</div>
+<div class="note-card"><span>✦</span><p><strong>Budgets are guides, not rules.</strong> Update your limit whenever your plans change. This dashboard helps you notice patterns, not judge them.</p></div>
+{% endblock %}
